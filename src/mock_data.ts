@@ -92,5 +92,3 @@ export default function () {
         logger.info('Loaded mock data!');
     })();
 }
-
-
