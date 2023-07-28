@@ -1,7 +1,7 @@
 import Route from "../types/route";
 import logger from "../util/logger";
 
-const fetch_post:Route = ['/fetch/post', 'GET', 'optional', async (req:any,res:any) => {
+const fetch_post:Route = ['/fetch/post', 'GET', 'none', async (req:any,res:any) => {
     
     if (!req.query.id) {
         res.status(404).send('missing post id parameter (?id=)');
@@ -52,7 +52,7 @@ const fetch_post:Route = ['/fetch/post', 'GET', 'optional', async (req:any,res:a
     }
 }];
 
-const fetch_next:Route = ['/fetch/next', 'GET', 'optional', async (req:any,res:any) => {
+const fetch_next:Route = ['/fetch/next', 'GET', 'none', async (req:any,res:any) => {
 
     const number = parseInt(req.query.number);
 
