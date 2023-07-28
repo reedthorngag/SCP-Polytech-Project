@@ -24,7 +24,7 @@ const profile:Route = ['/profile','GET','required', async (req:any,res:any) => {
         return;
     }
 
-    res.status(200).send(JSON.stringify(user))
+    res.status(200).contentType("json").send(JSON.stringify(user))
 
 }]
 

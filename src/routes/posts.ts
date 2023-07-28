@@ -1,10 +1,10 @@
 import Route from "../types/route";
 import logger from "../util/logger";
 
-const fetch_post = ['/fetch/post', 'GET', 'optional', async (req:any,res:any) => {
+const fetch_post:Route = ['/fetch/post', 'GET', 'optional', async (req:any,res:any) => {
     
     if (!req.query.id) {
-        res.status(404).send('missing post id parameter ("id")');
+        res.status(404).send('missing post id parameter (?id=)');
         return;
     }
 
@@ -15,25 +15,34 @@ const fetch_post = ['/fetch/post', 'GET', 'optional', async (req:any,res:any) =>
         },
         select: {
             Title:true,
-            Community:true,
+            Community: {
+                select: {
+                    CommunityID: true,
+                    Name: true
+                }
+            },
             Type:true,
             Url:true,
             Body:true,
             Rating:true,
-            Author:true,
+            Author: {
+                select: {
+                    UserID: true,
+                    DisplayName: true
+                }
+            },
             LastEdited:true,
             IsLocked:true,
             PostedAt:true
         }
     });
 
-    logger.info(JSON.stringify(post));
-
-    res.status(200).send();
+    res.status(200).contentType("json").send(JSON.stringify(post));
 
 }];
 
 const routeList:Route[] = [
+    fetch_post
 ];
 
 export default routeList;

@@ -28,6 +28,7 @@ model User {
     CommentsScore   Int         @default(0)
     PostsScore      Int         @default(0)
     IsDeleted       Boolean     @default(false)
+    CreatedCommunities Community[]
     Communities     CommunityMember[]
     Comments        Comment[]
     Posts           Post[]
@@ -48,6 +49,7 @@ model Community {
     Population      Int         @default(0)
     CreatedAt       DateTime    @default(now())
     CreatedBy       String      @db.Uuid
+    CreatedUser     User        @relation(fields:[CreatedBy],references: [UserID])
     Members         CommunityMember[]
     Posts           Post[]
     Tags            TaggedCommunity[]
@@ -93,8 +95,8 @@ model Post {
     Type            PostType    @default(TEXT)
     Title           String      @db.VarChar(128) // maybe index this as well?
     Url             String?     @db.VarChar(1024)
-    Body            String?
-    Rating          Int
+    Body            String?     @db.Text
+    Rating          Int         @default(0)
     AuthorID        String      @db.Uuid
     Author          User        @relation(fields: [AuthorID],references: [UserID])
     PostedAt        DateTime    @default(now())
@@ -107,6 +109,7 @@ model Post {
     Votes           Vote[]
     Tags            TaggedPost[]
     @@index([CommunityID])
+    @@index([PostedAt])
     @@unique([PostID,CommunityID])
 }
 
