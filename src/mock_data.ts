@@ -16,6 +16,7 @@ export default function () {
         logger.debug("Deleting old data...");
         // make sure to delete in the right order to prevent invalid forign keys
 
+        await prismaClient.communityMember.deleteMany();
         await prismaClient.post.deleteMany();
         await prismaClient.community.deleteMany();
         await prismaClient.loginInfo.deleteMany();
@@ -39,7 +40,7 @@ export default function () {
                 Email:'admin',
                 Password:passwordHash,
                 IsAdmin:true,
-                UserID: (await prismaClient.user.findFirst())?.UserID
+                UserID: (await prismaClient.user.findFirst())!.UserID
             }
         });
         await prismaClient.loginInfo.create({
@@ -47,7 +48,7 @@ export default function () {
                 Email:'testuser',
                 Password:passwordHash,
                 IsAdmin: false,
-                UserID: (await prismaClient.user.findMany())[1]?.UserID
+                UserID: (await prismaClient.user.findFirst({skip:1}))!.UserID
             }
         });
         await prismaClient.loginInfo.create({
@@ -78,6 +79,13 @@ export default function () {
                 }
             })
         }
+
+        logger.info(JSON.stringify(await prismaClient.communityMember.create({
+            data: {
+                CommunityID: (await prismaClient.community.findFirst())!.CommunityID,
+                UserID: (await prismaClient.user.findFirst({skip:1}))!.UserID
+            }
+        })));
     
         logger.debug("Generated mock data!");
         
