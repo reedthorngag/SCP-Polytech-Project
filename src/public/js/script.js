@@ -182,7 +182,7 @@ function loadPost(data) {
     const titleElem = document.createElement('title');
     titleElem.innerText = data.Title;
     const bodyPreviewElem = document.createElement('body-preview');
-    bodyPreviewElem.innerText = data.Body.length > 256 ? data.Body.slice(0,256) : data.Body;
+    bodyPreviewElem.innerText = data.Body.length > 256 ? data.Body.slice(0,256)+'...' : data.Body;
 
     // then build the post from those
     const post = document.createElement('post');
