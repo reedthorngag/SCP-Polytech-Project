@@ -89,13 +89,12 @@ banner {
 .content-container {
     display:flex;
     justify-content: center;
-    align-items: top;
+    align-items: center;
 }
 
 content {
-    display: inline-block;
-    margin: 2vh 0 5vh 0;
-    height: 1000px;
+    display: block;
+    margin: 3vh 0 5vh 0;
     width: 90vw;
     border-radius: 1vmin;
 }
@@ -296,17 +295,21 @@ error-string {
 /*#region posts*/
 posts {
     display: block;
-    width: 100%;
+    width: 90vw;
     height: fit-content;
     padding: 2.3vh 0 2vh 0;
 }
 
 post {
     display: block;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
     width: 100%;
     height: fit-content;
     border-bottom: 0.2vmin solid #303030;
     background-color: #131358;
+    border-radius: 1vmin;
     margin-bottom: 2vh;
     cursor: default;
     padding: 1vmin 2vmin 2vmin 2vmin;
@@ -337,6 +340,7 @@ post title {
     height: fit-content;
     font-weight: 600;
     font-size: 2.8vmin;
+    margin: 1vmin 0 1.5vmin 0;
 }
 
 post body-preview {
@@ -344,6 +348,7 @@ post body-preview {
     width: 100%;
     height: fit-content;
     font-size: 2vmin;
+    margin-left: 1vmin;
 }
 /*#endregion*/
 
