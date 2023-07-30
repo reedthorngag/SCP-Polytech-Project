@@ -1,10 +1,11 @@
-
+/*#region page*/
 html {
     overflow: scroll;
     overflow-x: hidden;
     background-color: #1f1f1f;
     color: #bfbfbf;
 }
+
 ::-webkit-scrollbar {
     width: 0;
     background: transparent;
@@ -13,7 +14,9 @@ html {
 body {
     margin: 0;
 }
+/*#endregion*/
 
+/*#region header*/
 header-container {
     display: block;
     position: sticky;
@@ -61,6 +64,16 @@ header profile button:hover {
     box-shadow: inset 0 0 1vw 0 #000070, 0 0 1vw 0 #000070;
 }
 
+.logo {
+    height:80%;
+    position: absolute;
+    top: 14%;
+    left: 1.5%;
+}
+
+/*#endregion*/
+
+/*#region banner*/
 banner {
     display:block;
     margin-top: 3vh;
@@ -70,7 +83,9 @@ banner {
     background-color: #2323a0;
     border-radius: 1vmin;
 }
+/*#endregion*/
 
+/*#region content*/
 .content-container {
     display:flex;
     justify-content: center;
@@ -82,10 +97,25 @@ content {
     margin: 2vh 0 5vh 0;
     height: 1000px;
     width: 90vw;
-    background-color: #131358;
     border-radius: 1vmin;
 }
 
+content-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 8vh;
+    box-shadow: 0 0.1vh 0.4vh 0 black;
+    background-image: linear-gradient(to bottom, #1313a880,#3333ff60,#1313a880);
+    border-radius: inherit;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+/*#endregion*/
+
+/*#region sidebar*/
 sidebar {
     display: inline-block;
     width: 20vw;
@@ -94,14 +124,9 @@ sidebar {
     margin: 5vh 2vw;
     border-radius: 1vmin;
 }
+/*#endregion*/
 
-.logo {
-    height:80%;
-    position: absolute;
-    top: 14%;
-    left: 1.5%;
-}
-
+/*#region search*/
 header search {
     display: flex;
     align-items: center;
@@ -133,27 +158,9 @@ header search {
 .search-input:focus {
     outline: none;
 }
+/*#endregion*/
 
-.relative-width {
-    position: relative;
-    width: 100%;
-    height: fit-content;
-}
-
-.left {
-    position: absolute;
-    top:0;
-    left:0;
-    margin-left: 10%;
-}
-
-.right {
-    position: absolute;
-    top:0;
-    right:0;
-    margin-right: 10%;
-}
-
+/*#region signup/logon*/
 signup, login {
     display: none;
     opacity: 0;
@@ -264,17 +271,79 @@ error-string {
     display: none;
 }
 
-content-header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.relative-width {
+    position: relative;
     width: 100%;
-    height: 8vh;
-    box-shadow: 0 0.1vh 0.4vh 0 black;
-    background-image: linear-gradient(to bottom, #00007040,#30309020,#00007040);
-    border-radius: inherit;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    height: fit-content;
 }
+
+.left {
+    position: absolute;
+    top:0;
+    left:0;
+    margin-left: 10%;
+}
+
+.right {
+    position: absolute;
+    top:0;
+    right:0;
+    margin-right: 10%;
+}
+
+/*#endregion*/
+
+/*#region posts*/
+posts {
+    display: block;
+    width: 100%;
+    height: fit-content;
+    padding: 2.3vh 0 2vh 0;
+}
+
+post {
+    display: block;
+    width: 100%;
+    height: fit-content;
+    border-bottom: 0.2vmin solid #303030;
+    background-color: #131358;
+    margin-bottom: 2vh;
+    cursor: default;
+    padding: 1vmin 2vmin 2vmin 2vmin;
+}
+
+post:hover {
+    box-shadow: 0 0 0.3vmin 0 #808080;
+}
+
+post post-header {
+    display: block;
+    width:100%;
+    height:2.5vmin;
+    font-size: 1.8vmin;
+    color: #9f9f9f;
+}
+
+post post-header community, post post-header author {
+    display: inline;
+    text-decoration: underline;
+    cursor: pointer;
+    padding-right: 1vmin;
+}
+
+post title {
+    display: block;
+    width: 100%;
+    height: fit-content;
+    font-weight: 600;
+    font-size: 2.8vmin;
+}
+
+post body-preview {
+    display: block;
+    width: 100%;
+    height: fit-content;
+    font-size: 2vmin;
+}
+/*#endregion*/
 

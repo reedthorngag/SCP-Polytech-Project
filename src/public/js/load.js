@@ -23,10 +23,21 @@ function load() {
     req.open('GET', '/api/profile');
     req.onload = () => {
 
-        if (req.status === 500) {
-            criticalError(req.responseText);
-            return;
+
+        switch (req.status) {
+
+            case 200:
+                break;
+
+            case 401:
+                document.cookie = 'auth=; path=/; max-age=-99; Samesite=Strict;'
+                return;
+
+            default:
+                return;
         }
+
+        if (req.status !== 200) return;
 
         let profile = JSON.parse(req.responseText);
 
@@ -36,28 +47,15 @@ function load() {
 
     }
     req.onerror = () => {
-        console.log(req.status);
-        switch (req.status) {
-
-            case 403:
-                document.cookie = 'auth=; path=/; max-age=-99;'
-                break;
-
-            default: {
-                if (--error) {
-                    error = 5;
-                    connectionFailure();
-                } else
-                    setTimeout(req.send.bind(req),1000);
-                break;
-            }
-        }
+        if (--error) {
+            error = 5;
+            connectionFailure();
+        } else
+            setTimeout(req.send.bind(req),1000);
     }
 
     req.send();
 
 }
 
-let req = new XMLHttpRequest();
-req.open('GET', '/api/post?id=1');
-req.send();
+loadNext();

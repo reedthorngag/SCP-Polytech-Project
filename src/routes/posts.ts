@@ -16,6 +16,7 @@ const fetch_post:Route = ['/fetch/post', 'GET', 'none', async (req:any,res:any) 
                 IsDeleted:false
             },
             select: {
+                PostID:true,
                 Title:true,
                 Community: {
                     select: {
@@ -55,26 +56,29 @@ const fetch_post:Route = ['/fetch/post', 'GET', 'none', async (req:any,res:any) 
 
 const fetch_next:Route = ['/fetch/next', 'GET', 'none', async (req:any,res:any) => {
 
-    const number = parseInt(req.query.number);
+    const fetch = parseInt(req.query.fetch);
+    const skip = parseInt(req.query.skip);
 
-    if (req.query.last && (new Date(req.query.last)).toISOString()!==req.query.last) {
+    /*if (req.query.last && (new Date(req.query.last)).toISOString()!==req.query.last) {
         res.status(422).contentType('json').send('{"error":"invalid_date_string"}');
         return;
-    }
+    }*/
 
     try {
         const posts = await prismaClient.post.findMany({
-            take: !!number && number > 0 ? number : 10,
+            take: !!fetch && fetch > 0 ? fetch : 10,
+            skip: !!skip && skip > 0 ? skip : 0,
             where: {
-                PostedAt: {
+                /*PostedAt: {
                     lt: req.query.last || new Date()
-                },
+                },*/
                 IsDeleted:false
             },
             orderBy: {
                 PostedAt: 'asc'
             },
             select: {
+                PostID:true,
                 Title:true,
                 Community: {
                     select: {
