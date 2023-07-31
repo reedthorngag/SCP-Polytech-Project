@@ -49,7 +49,7 @@ export default function () {
                 Email:'admin',
                 Password:passwordHash,
                 IsAdmin:true,
-                UserID: (await prismaClient.user.findFirst())!.UserID
+                UserID: (await prismaClient.user.findFirst({skip:1}))!.UserID
             }
         });
         await prismaClient.loginInfo.create({
@@ -57,7 +57,7 @@ export default function () {
                 Email:'unknownuser',
                 Password:passwordHash,
                 IsAdmin: false,
-                UserID: (await prismaClient.user.findFirst({skip:1}))!.UserID
+                UserID: (await prismaClient.user.findFirst())!.UserID
             }
         });
 
@@ -82,7 +82,7 @@ export default function () {
                     Title: post.title,
                     Body: post.body,
                     CommunityID: (await prismaClient.community.findFirst())!.CommunityID,
-                    AuthorID: (await prismaClient.user.findFirst({skip:1}))!.UserID,
+                    AuthorID: (await prismaClient.user.findFirst())!.UserID,
                     Url: post.image,
                     Type: PostType.TEXT
                 }

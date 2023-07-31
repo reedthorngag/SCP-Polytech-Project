@@ -42,6 +42,21 @@ function hidesignup() {
     }, 150);
 }
 
+/**
+ * shows a generic error box at the top of the page, mostly
+ * used to show connection errors or unexpected errors
+ * 
+ * @param {string} string // error string to show the user
+ */
+function error(string) {
+    const errorElem = document.getElementById('error');
+    errorElem.innerText = string;
+    errorElem.style.display = 'block';
+    errorElem.style.animation = 'showError 3s linear forwards';
+    console.log(errorElem.style.animation);
+    setTimeout(()=> errorElem.style.display = 'none', 3000);
+}
+
 function submitLogin(form) {
     
     form['0'].classList.remove('input-error');
@@ -65,7 +80,13 @@ function submitLogin(form) {
     req.open('POST','/api/login');
     req.setRequestHeader('Content-type','application/json');
     req.onload = () => {
-        const data = JSON.parse(req.responseText)
+
+        if (req.status !== 200) {
+            loginError('Login failed with unexpected error. Code: '+req.status);
+            return;
+        }
+
+        const data = JSON.parse(req.responseText);
         switch (data.status) {
             case 'success':
                 document.cookie = 'auth='+data.token+'; max-age='+(60*60*24*5)/* 5 days */+'; path=/; Samesite=Strict';
@@ -75,16 +96,11 @@ function submitLogin(form) {
                 loginError('Incorrect username or password!');
                 break;
             default:
-                loginError('Unexpected server response! try again.')
+                loginError('Unexpected server response! Try again.');
         }
     };
     req.onerror = () => {
-        switch (req.status) {
-            case 404:
-                loginError('Not connected! check your internet.');
-            default: console.log("Error, unknown status: "+req.status);
-                break;
-        }
+        error('Request failed! Check your internet and try again.');
     };
     req.send('{"email":"'+form['0'].value+'","password":"'+form['1'].value+'"}');
 }
@@ -151,12 +167,18 @@ function loadNext() {
     let req = new XMLHttpRequest();
     req.open('GET', '/api/fetch/next?skip='+skip);
     req.onload = () => {
-        if (req.status !== 200) return;
+        if (req.status !== 200) {
+            error('Couldn\'t load posts! Error code: '+req.status)
+            return;
+        }
 
         for (const postData of JSON.parse(req.response))
             loadPost(postData);
 
         skip += 10;
+    }
+    req.onerror = () => {
+        error('Request failed! Check your internet.');
     }
     req.send();
 }
@@ -192,18 +214,58 @@ function loadPost(data) {
     const [authorID, communityID, postID] = [data.Author.UserID, data.Community.CommunityID, data.PostID];
 
     post.onclick = (event) => {
-        console.log(postID);
+        displayPost(post,postID)
         event.stopPropagation();
     };
     communityElem.onclick = (event) => {
-        console.log(communityID);
+        displayCommunity(communityID);
         event.stopPropagation();
     };
     authorElem.onclick = (event) => {
-        console.log(authorID);
+        displayUserProfile(authorID);
         event.stopPropagation();
     };
 
     // finally, append it to the feed
     document.getElementById('posts-feed').appendChild(post);
+}
+
+let onPostsFeed = true; // if currently showing the feed or something else
+let oldScrollPos = 0; // scroll pos to go to when switching back to feed
+
+/**
+ * switches the page content to a specific post and saves old content for fast return to feed
+ * 
+ * @param {HTMLElement} post // post element that was clicked on
+ * @param {string} postID  // id of the post that was clicked on
+ */
+function displayPost(post,postID) {
+
+    const req = new XMLHttpRequest();
+    req.open('POST','/api/fetch/post?id='+postID);
+    req.onload = () => {
+        
+        switch (req.status) {
+            case 404:
+                error('Invalid post ID!');
+                return;
+            case 200:
+                break;
+            default:
+                error('Unexpected error! Code: '+req.status);
+                return;
+        }
+
+        oldScrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+
+        const content = document.getElementById('content');
+
+        document.getElementById('tmp-storage').children = content.children;
+        content.innerText = ''; // clear visable content
+
+    };
+    req.onerror = () => {
+        error('Request failed! check your internet.');
+    };
+    req.send();
 }

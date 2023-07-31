@@ -17,27 +17,21 @@ if (document.cookie.includes('auth=')) {
 }
 
 function load() {
-    let error = 5;
 
     let req = new XMLHttpRequest();
     req.open('GET', '/api/profile');
     req.onload = () => {
 
-
         switch (req.status) {
-
             case 200:
                 break;
-
             case 401:
                 document.cookie = 'auth=; path=/; max-age=-99; Samesite=Strict;'
                 return;
-
             default:
+                error('Failed to fetch profile! check internet and reload.');
                 return;
         }
-
-        if (req.status !== 200) return;
 
         let profile = JSON.parse(req.responseText);
 
@@ -47,11 +41,7 @@ function load() {
 
     }
     req.onerror = () => {
-        if (--error) {
-            error = 5;
-            connectionFailure();
-        } else
-            setTimeout(req.send.bind(req),1000);
+        error('Request failed! Check internet and reload.')
     }
 
     req.send();

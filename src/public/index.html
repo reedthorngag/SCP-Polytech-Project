@@ -10,8 +10,9 @@
         <div>
             <header-container>
                 <header>
-                    <a href="/">
-                        <img class="logo" src="./images/logo.png" alt="Snowball logo">
+                    <a href="/" class="logo">
+                        <img src="./images/SCP-logo.png" alt="SCP foundation logo">
+                        <logo-text>SCP Foundation</logo-text>
                     </a>
                     <search>
                         <img class="search-icon" src="./images/search-icon.png">
@@ -26,11 +27,11 @@
                 </header>
             </header-container>
             <banner>
-
+                <img src="./images/SCP-banner.jpg" alt="SCP Foundation banner">
             </banner>
         </div>
         <div class="content-container">
-            <content>
+            <content id="content">
                 <content-header></content-header>
                 <posts id="posts-feed">
 
@@ -40,6 +41,7 @@
 
             </sidebar-->
         </div>
+        <div id="tmp-storage"></div>
         <login id="login">
             <container>
                 <button class="close-button" onclick="hidelogin()">X</button>
@@ -99,6 +101,7 @@
         </signup>
         <div id="login-overlay" onclick="hidelogin()"></div>
         <div id="signup-overlay" onclick="hidesignup()"></div>
+        <div id="error"></div>
         <script type="text/javascript" src="./js/load.js"></script>
     </body>
 </html>
