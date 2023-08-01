@@ -10,7 +10,7 @@ const search_posts:Route = ['/search/posts','GET','none', async (req:any,res:any
     const number = parseInt(req.query.skip);
 
     const posts = await prismaClient.post.findMany({
-        skip: !!number && number>0? number : 0,
+        skip: !!number && number>0 ? number : 0,
         take: 10,
         orderBy: {
             _relevance: {

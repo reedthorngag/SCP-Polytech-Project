@@ -26,31 +26,29 @@ export default function () {
         logger.debug("Deleted old data!");
         logger.debug("Generating new mock data...");
 
-        await prismaClient.user.create({
+        const UnknownUser = (await prismaClient.user.create({
             data: {
                 Name: 'UnknownUser',
                 DisplayName: 'Unknown User',
                 Bio: '',
                 IsAdmin: false
             }
-        });
-        await prismaClient.user.create({
+        })).UserID;
+        const admin = (await prismaClient.user.create({
             data: {
                 Name: 'Admin',
                 DisplayName: 'Admin',
                 Bio: '',
                 IsAdmin: false
             }
-        });
-
-        logger.info((await prismaClient.user.findFirst({skip:1}))!.DisplayName+" - "+(await prismaClient.user.findFirst())!.DisplayName)
+        })).UserID;
 
         await prismaClient.loginInfo.create({
             data: {
                 Email:'admin',
                 Password:passwordHash,
                 IsAdmin:true,
-                UserID: (await prismaClient.user.findFirst({skip:1}))!.UserID
+                UserID: admin
             }
         });
         await prismaClient.loginInfo.create({
@@ -58,7 +56,7 @@ export default function () {
                 Email:'unknownuser',
                 Password:passwordHash,
                 IsAdmin: false,
-                UserID: (await prismaClient.user.findFirst())!.UserID
+                UserID: UnknownUser
             }
         });
 

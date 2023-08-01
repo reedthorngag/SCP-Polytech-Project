@@ -57,6 +57,29 @@ function error(string) {
     setTimeout(()=> errorElem.style.display = 'none', 3000);
 }
 
+let lastUpdate = 0; // when the posts were last loaded in
+let loadFailed = false; // if the last page load failed or not
+
+function scrollHandler() {
+
+    const scrollHeight = document.body.scrollHeight-(window.innerHeight+window.scrollY);
+    if (scrollHeight>300) return;
+
+    if (scrollHeight) {
+        const timeoutTime = (new Date()).getTime()-lastUpdate;
+        if (timeoutTime < 500 || (loadFailed && timeoutTime < 5000)) return;
+    }
+
+    lastUpdate = (new Date()).getTime();
+
+    loadNext(true);
+}
+
+/**
+ * validates the login form data and process the login
+ * 
+ * @param {HTMLFormElement} form  the form that was submitted
+ */
 function submitLogin(form) {
     
     form['0'].classList.remove('input-error');
@@ -158,26 +181,35 @@ async function ping() {
 }
 
 let skip = 0; // keeps track of what post number to load
+let currURI; // current URI (so loadNext() can be called from scroll handler without needing context)
 
 /**
  * loads the next 10 posts and adds them to the feed
  * 
+ * @param {boolean} retry whether to retry the request or not
+ * @returns {boolean} true if loaded more posts, false if failed
  */
-function loadNext() {
+function loadNext(retry) {
     let req = new XMLHttpRequest();
-    req.open('GET', '/api/fetch/next?skip='+skip);
+    req.open('GET', currURI+skip);
     req.onload = () => {
         if (req.status !== 200) {
-            error('Couldn\'t load posts! Error code: '+req.status)
+            if (retry) setTimeout(loadNext.bind(null,false),3000);
+            loadFailed = true;
+            error('Couldn\'t load posts! Error code: '+req.status);
             return;
         }
 
-        for (const postData of JSON.parse(req.response))
+        const data = JSON.parse(req.response);
+
+        for (const postData of data)
             loadPost(postData);
 
-        skip += 10;
+        skip += data.length;
     }
     req.onerror = () => {
+        if (retry) setTimeout(loadNext.bind(null,false),3000);
+        loadFailed = true;
         error('Request failed! Check your internet.');
     }
     req.send();
@@ -220,12 +252,12 @@ function loadPost(data) {
     const [authorID, communityID, postID] = [data.Author.UserID, data.Community.CommunityID, data.PostID];
 
     post.onclick = (event) => {
-        displayPost(post,postID,true)
+        displayPost(post,postID,true);
         event.stopPropagation();
     };
     communityElem.onclick = (event) => {
         displayCommunity(communityID,true);
-        event.stopPropagation();
+        event.stopImmediatePropagation();
     };
     authorElem.onclick = (event) => {
         displayUserProfile(authorID,true);
@@ -353,4 +385,35 @@ function goBack() {
     document.body.scrollTop = oldScrollPos;
 
     tmpStorage.innerText = '';
+}
+
+/**
+ * searches for the search string in the search input and displays the results
+ */
+function search() {
+    const searchString = document.getElementById('search').value;
+
+    if (!searchString) return;
+
+    currURI = '/api/search?param='+encodeURIComponent(searchString)+'&skip=';
+
+    let req = new XMLHttpRequest();
+    req.open('GET', currURI);
+    req.onload = () => {
+        if (req.status !== 200) {
+            error('Couldn\'t load posts! Error code: '+req.status)
+            return;
+        }
+
+        const data = JSON.parse(req.response);
+
+        for (const postData of data)
+            loadPost(postData);
+
+        skip = data.length;
+    }
+    req.onerror = () => {
+        error('Request failed! Check your internet.');
+    }
+    req.send();
 }

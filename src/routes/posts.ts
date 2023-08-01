@@ -62,14 +62,9 @@ const fetch_next:Route = ['/fetch/next', 'GET', 'none', async (req:any,res:any) 
     const fetch = parseInt(req.query.fetch);
     const skip = parseInt(req.query.skip);
 
-    /*if (req.query.last && (new Date(req.query.last)).toISOString()!==req.query.last) {
-        res.status(422).contentType('json').send('{"error":"invalid_date_string"}');
-        return;
-    }*/
-
     try {
         const posts = await prismaClient.post.findMany({
-            take: !!fetch && fetch > 0 ? fetch : 10,
+            take: !!fetch && fetch > 0 ? fetch : 1,
             skip: !!skip && skip > 0 ? skip : 0,
             where: {
                 IsDeleted:false

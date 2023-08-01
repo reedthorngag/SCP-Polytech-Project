@@ -7,16 +7,17 @@ document.addEventListener('keyup',(event) => {
     }
 });
 
+document.addEventListener('scroll', scrollHandler);
+
 let userID;
 
 if (document.cookie.includes('auth=')) {
-    //let auth = JSON.parse(atob(document.cookie.split('auth=')[1].split('; ')[0].split('.')[1]));
-    load()
+    loadProfile()
 } else {
-    console.log('not logged in!')
+    console.log('not logged in!');
 }
 
-function load() {
+function loadProfile() {
 
     let req = new XMLHttpRequest();
     req.open('GET', '/api/profile');
@@ -48,4 +49,5 @@ function load() {
 
 }
 
-loadNext();
+currURI = '/api/fetch/next?skip=';
+loadNext(true);
