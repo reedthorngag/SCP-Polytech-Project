@@ -384,17 +384,23 @@ post title {
     margin: 1vmin 0 1.5vmin 0;
 }
 
-post body-preview {
+post img {
+    max-width: 90%;
+    max-height: 75vmin;
+    border-radius: 1.2vmin;
+}
+
+post body {
     display: block;
     width: 100%;
     height: fit-content;
     font-size: 2vmin;
     margin-left: 1vmin;
 }
+
 /*#endregion*/
 
 /*#region misc*/
-
 #tmp-storage {
     display: none;
 }
@@ -404,8 +410,8 @@ post body-preview {
     opacity: 0;
     position: fixed;
     z-index: 100;
-    left: 10vw;
-    width: 80vw;
+    left: 25vw;
+    width: 50vw;
     height: fit-content;
     text-align: center;
     border-radius: 2vmin;
@@ -415,6 +421,18 @@ post body-preview {
     border: 1vmin solid #0000b0;
     box-shadow: 0 0 1.2vmin 0.2vmin #cabc00;
     padding: 0.8vmin;
+}
+
+back-button {
+    display:block;
+    margin: -1.5vmin 0 0 1vw;
+    font-size: 6vmin;
+    color: #a00000;
+    cursor: pointer;
+}
+
+back-button::after {
+    content: '←';
 }
 
 /*#endregion*/

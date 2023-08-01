@@ -26,7 +26,6 @@ export default function () {
         logger.debug("Deleted old data!");
         logger.debug("Generating new mock data...");
 
-
         await prismaClient.user.create({
             data: {
                 Name: 'UnknownUser',
@@ -43,6 +42,8 @@ export default function () {
                 IsAdmin: false
             }
         });
+
+        logger.info((await prismaClient.user.findFirst({skip:1}))!.DisplayName+" - "+(await prismaClient.user.findFirst())!.DisplayName)
 
         await prismaClient.loginInfo.create({
             data: {
@@ -84,7 +85,7 @@ export default function () {
                     CommunityID: (await prismaClient.community.findFirst())!.CommunityID,
                     AuthorID: (await prismaClient.user.findFirst())!.UserID,
                     Url: post.image,
-                    Type: PostType.TEXT
+                    Type: post.image ? PostType.IMAGE : PostType.TEXT
                 }
             });
         }

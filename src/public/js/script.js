@@ -190,7 +190,7 @@ function loadNext() {
  */
 function loadPost(data) {
 
-    if (data.Type !== 'TEXT') return; // only text is supported so far
+    if (data.Type !== 'TEXT' && data.Type !== 'IMAGE') return; // only text and images are supported so far
 
     // first build the info header (saying the community and who posted it)
     const communityElem = document.createElement('community');
@@ -203,26 +203,32 @@ function loadPost(data) {
     // then create the post data, title + body
     const titleElem = document.createElement('title');
     titleElem.innerText = data.Title;
-    const bodyPreviewElem = document.createElement('body-preview');
+    let imgElem;
+    if (data.Type === 'IMAGE' && data.Url) {
+        imgElem = document.createElement('img');
+        imgElem.src = './images/'+data.Url;
+        imgElem.alt = 'post image';
+    }
+    const bodyPreviewElem = document.createElement('body');
     bodyPreviewElem.innerText = data.Body.length > 256 ? data.Body.slice(0,256)+'...' : data.Body;
 
     // then build the post from those
     const post = document.createElement('post');
-    post.append(infoElem,titleElem,bodyPreviewElem);
+    post.append(infoElem,titleElem,imgElem ?? '',bodyPreviewElem);
 
     // add event listeners
     const [authorID, communityID, postID] = [data.Author.UserID, data.Community.CommunityID, data.PostID];
 
     post.onclick = (event) => {
-        displayPost(post,postID)
+        displayPost(post,postID,true)
         event.stopPropagation();
     };
     communityElem.onclick = (event) => {
-        displayCommunity(communityID);
+        displayCommunity(communityID,true);
         event.stopPropagation();
     };
     authorElem.onclick = (event) => {
-        displayUserProfile(authorID);
+        displayUserProfile(authorID,true);
         event.stopPropagation();
     };
 
@@ -230,19 +236,22 @@ function loadPost(data) {
     document.getElementById('posts-feed').appendChild(post);
 }
 
+
 let onPostsFeed = true; // if currently showing the feed or something else
 let oldScrollPos = 0; // scroll pos to go to when switching back to feed
 
 /**
- * switches the page content to a specific post and saves old content for fast return to feed
+ * switches the page content to a specific post and saves old content for
+ * fast return to feed also saves scroll position
  * 
- * @param {HTMLElement} post // post element that was clicked on
- * @param {string} postID  // id of the post that was clicked on
+ * @param {HTMLElement} post  post element that was clicked on
+ * @param {string} postID  id of the post that was clicked on
+ * @param {boolean} save  whether to save old state or not
  */
-function displayPost(post,postID) {
+function displayPost(post,postID,save) {
 
     const req = new XMLHttpRequest();
-    req.open('POST','/api/fetch/post?id='+postID);
+    req.open('GET','/api/fetch/post?id='+postID);
     req.onload = () => {
         
         switch (req.status) {
@@ -256,16 +265,92 @@ function displayPost(post,postID) {
                 return;
         }
 
-        oldScrollPos = document.documentElement.scrollTop || document.body.scrollTop;
-
         const content = document.getElementById('content');
 
-        document.getElementById('tmp-storage').children = content.children;
+        if (save) {
+            oldScrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+
+            document.getElementById('tmp-storage').innerText = '';
+            document.getElementById('tmp-storage').append(...content.childNodes);
+        }
+
         content.innerText = ''; // clear visable content
+
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+
+
+        const data = JSON.parse(req.response);
+
+        if (data.Type !== 'TEXT' && data.Type !== 'IMAGE') return; // only text and images are supported so far
+
+        // first build the header (saying the community and who posted it and a back button)
+        const communityElem = document.createElement('community');
+        communityElem.innerText = data.Community.Name;
+        const authorElem = document.createElement('author');
+        authorElem.innerText = data.Author.DisplayName;
+        const infoElem = document.createElement('post-header');
+        infoElem.append('Community: ',communityElem,' Author: ',authorElem);
+
+        // then create the post data, title + body
+        const titleElem = document.createElement('title');
+        titleElem.innerText = data.Title;
+        let imgElem;
+        if (data.Type === 'IMAGE' && data.Url) {
+            imgElem = document.createElement('img');
+            imgElem.src = './images/'+data.Url;
+            imgElem.alt = 'post image';
+        }
+        const bodyPreviewElem = document.createElement('body');
+        bodyPreviewElem.innerText = data.Body;
+
+        const backbutton = document.createElement('back-button');
+
+        // then build the post from those
+        const post = document.createElement('post');
+        post.append(backbutton,infoElem,titleElem,imgElem ?? '',bodyPreviewElem);
+
+        // add event listeners
+        const [authorID, communityID, postID] = [data.Author.UserID, data.Community.CommunityID, data.PostID];
+
+        backbutton.onclick = (event) => {
+            goBack();
+            event.stopPropagation();
+        };
+        communityElem.onclick = (event) => {
+            displayCommunity(communityID,false);
+            event.stopPropagation();
+        };
+        authorElem.onclick = (event) => {
+            displayUserProfile(authorID,false);
+            event.stopPropagation();
+        };
+
+        document.getElementById('banner').style.display = 'none';
+
+        content.appendChild(post);
 
     };
     req.onerror = () => {
         error('Request failed! check your internet.');
     };
     req.send();
+}
+
+/**
+ * goes back to the old saved state
+ * 
+ */
+function goBack() {
+    const tmpStorage = document.getElementById('tmp-storage');
+
+    document.getElementById('banner').style.display = 'flex';
+
+    document.getElementById('content').innerText = '';
+    document.getElementById('content').append(...tmpStorage.childNodes);
+
+    document.documentElement.scrollTop = oldScrollPos;
+    document.body.scrollTop = oldScrollPos;
+
+    tmpStorage.innerText = '';
 }

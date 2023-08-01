@@ -34,7 +34,7 @@ const scp002 = {
 
         Following the termination of General Mulhausen, SCP-002 was re-secured by SCP staff and brought into special containment in [CLASSIFIED], where it currently resides. Staff with clearance below Level 3 have been denied access to the SCP-002 container without prior approval of at least two Level 4 staff after the Mulhausen incident.
 `,
-    image: 'images/SCP-002.jpg'
+    image: 'SCP-002.jpg'
 }
 
 const scp003 = {
@@ -169,7 +169,7 @@ const scp004 = {
     
     Upon unlocking SCP-004-14 with SCP-004-7, the box opens automatically on hinges. The volume of the space inside is precisely five times greater than the outer dimensions imply. Items placed within while the lid remains open do not affect the weight or any other properties of the box. When the lid is closed and locked, however, all items inside vanish irretrievably. Personnel locked inside the box are also irretrievable, although losing personnel in this fashion appears to affect significantly the dreams experienced by [DATA EXPUNGED].
 `,
-    image: 'images/SCP-004.jpg'
+    image: 'SCP-004.jpg'
 }
 
 const scp005 = {
@@ -190,7 +190,7 @@ const scp005 = {
 
     While SCP-005 has been shown to be effective in removing almost any form of locking device, further experiments have shown that efforts to disguise the purpose or identity of a lock have proven at least somewhat successful in defeating SCP-005's ability. In approximately 50% of cases where a volunteer was not able to identify a locking device as such, SCP-005 was not successful in deactivating the device. Due to these results, SCP-005 has been tentatively classified as 'sentient' and further tests are being run to determine its cognitive abilities. However, there are no results that show any traits that prevent it from being able to identify any particular locking device, only that the aforementioned device has been heavily concealed and disguised.
 `,
-image: 'images/SCP-005.jpg'
+image: 'SCP-005.jpg'
 }
 
 const scp006 = {

@@ -5,9 +5,11 @@ import logger from "../util/logger";
 const fetch_post:Route = ['/fetch/post', 'GET', 'none', async (req:any,res:any) => {
     
     if (!req.query.id) {
-        res.status(404).send('missing post id parameter (?id=)');
+        res.status(404).contentType('text').send('missing post id parameter (?id=)');
         return;
     }
+
+    logger.info(req.query.id);
 
     try {
         const post = await prismaClient.post.findUnique({
@@ -47,6 +49,7 @@ const fetch_post:Route = ['/fetch/post', 'GET', 'none', async (req:any,res:any) 
 
     } catch (error:any) {
         if (error.code === 'P2023') {
+            logger.info('fuck');
             res.status(404).contentType("json").send('{"error":"invalid_id"}');
         } else {
             logger.error(error);
@@ -69,9 +72,6 @@ const fetch_next:Route = ['/fetch/next', 'GET', 'none', async (req:any,res:any) 
             take: !!fetch && fetch > 0 ? fetch : 10,
             skip: !!skip && skip > 0 ? skip : 0,
             where: {
-                /*PostedAt: {
-                    lt: req.query.last || new Date()
-                },*/
                 IsDeleted:false
             },
             orderBy: {
