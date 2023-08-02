@@ -60,14 +60,19 @@ function error(string) {
 let lastUpdate = 0; // when the posts were last loaded in
 let loadFailed = false; // if the last page load failed or not
 
+/**
+ * funtion that is run on scroll events which loads the next posts
+ * if the user is near the bottom of the page
+ */
 function scrollHandler() {
 
     const scrollHeight = document.body.scrollHeight-(window.innerHeight+window.scrollY);
     if (scrollHeight>300) return;
 
-    if (scrollHeight) {
+    if (scrollHeight || loadFailed) {
         const timeoutTime = (new Date()).getTime()-lastUpdate;
         if (timeoutTime < 500 || (loadFailed && timeoutTime < 5000)) return;
+        console.log(timeoutTime)
     }
 
     lastUpdate = (new Date()).getTime();
@@ -201,6 +206,11 @@ function loadNext(retry) {
         }
 
         const data = JSON.parse(req.response);
+
+        if (!data.length) {
+            loadFailed = true;
+            return;
+        }
 
         for (const postData of data)
             loadPost(postData);
@@ -391,21 +401,27 @@ function goBack() {
  * searches for the search string in the search input and displays the results
  */
 function search() {
-    const searchString = document.getElementById('search').value;
+    const searchString = document.getElementById('search-input').value;
 
     if (!searchString) return;
 
-    currURI = '/api/search?param='+encodeURIComponent(searchString)+'&skip=';
+    currURI = '/api/search/posts?param='+encodeURIComponent(searchString)+'&skip=';
 
     let req = new XMLHttpRequest();
-    req.open('GET', currURI);
+    req.open('GET', currURI+0);
     req.onload = () => {
         if (req.status !== 200) {
             error('Couldn\'t load posts! Error code: '+req.status)
             return;
         }
 
+        document.getElementById('posts-feed').innerText = '';
+
         const data = JSON.parse(req.response);
+
+        if (!data.length) {
+            document.getElementById('posts-feed').innerHTML = '<post><body>No posts match your search.</body></post>'
+        }
 
         for (const postData of data)
             loadPost(postData);
