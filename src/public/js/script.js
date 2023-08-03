@@ -125,6 +125,7 @@ function submitLogin(form) {
                 break;
             default:
                 loginError('Unexpected server response! Try again.');
+                break;
         }
     };
     req.onerror = () => {
@@ -136,6 +137,68 @@ function submitLogin(form) {
 function loginError(string) {
     document.getElementById('login-error').style.display = 'block';
     document.getElementById('login-error').textContent = string;
+}
+
+/**
+ * validates the signup form data and process the signup
+ * 
+ * @param {HTMLFormElement} form  the form that was submitted
+ */
+function submitSignup(form) {
+    
+    let failed = false;
+
+    for (let i = 0; i < 6; i++) {
+        form[i].classList.remove('input-error');
+        if (!form[i].value) {
+            form[i].classList.add('input-error');
+            failed = true;
+        }
+    }
+
+    if (failed) {
+        loginError('Please fill out all fields!');
+        return;
+    }
+
+
+
+    const req = new XMLHttpRequest();
+    req.open('POST','/api/signup');
+    req.setRequestHeader('Content-type','application/json');
+    req.onload = () => {
+
+        if (req.status !== 200) {
+            signupError('Login failed with unexpected error. Code: '+req.status);
+            return;
+        }
+
+        const data = JSON.parse(req.responseText);
+        switch (data.status) {
+            case 'success':
+                hidesignup();
+                showlogin();
+                // TODO: display a success message first
+                break;
+            case 'failed':
+                switch (data.reason) {
+                    case 'email_in_use':
+                        signupError('Incorrect username or password!');
+                        break;
+                    case 'display_name_unavailable':
+                        signupError('Display name unavailable!');
+                        break;
+                }
+                break;
+            default:
+                signupError('Unexpected server response! Try again.');
+                break;
+        }
+    };
+    req.onerror = () => {
+        error('Request failed! Check your internet and try again.');
+    };
+    req.send(`{"name":"${form[0].value}","email":"${form[1].value}","displayName":"${form[2].value}","dob":"${form[3].value}","password":"${form[4].value}"}`);
 }
 
 function signupError(string) {

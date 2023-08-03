@@ -9,8 +9,6 @@ const fetch_post:Route = ['/fetch/post', 'GET', 'none', async (req:any,res:any) 
         return;
     }
 
-    logger.info(req.query.id);
-
     try {
         const post = await prismaClient.post.findUnique({
             where: {

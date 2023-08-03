@@ -31,6 +31,7 @@ export default function () {
                 Name: 'UnknownUser',
                 DisplayName: 'Unknown User',
                 Bio: '',
+                Dob: new Date(),
                 IsAdmin: false
             }
         })).UserID;
@@ -39,6 +40,7 @@ export default function () {
                 Name: 'Admin',
                 DisplayName: 'Admin',
                 Bio: '',
+                Dob: new Date(),
                 IsAdmin: false
             }
         })).UserID;

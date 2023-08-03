@@ -68,7 +68,7 @@
         <signup id="signup">
             <container>
                 <button class="close-button" onclick="hidesignup()">X</button>
-                <form method="POST" action="/api/signup" class="login-form">
+                <form class="login-form" onsubmit="submitSignup(this);return false;">
                     <h2>Sign up</h2>
 
                     <label for="name">Name: </label>
@@ -78,10 +78,10 @@
                     <input type="email" id="email" name="email" placeholder="example@snowball.com">
 
                     <label for="displayname">Display name: </label>
-                    <input type="text" id="displayname" name="displayname" placeholder="What everyone sees">
+                    <input type="text" id="display-name" name="displayName" placeholder="What everyone sees">
 
-                    <label for="age">Age: </label>
-                    <input type="date" id="age" name="age"><br/>
+                    <label for="dob">Date of birth: </label>
+                    <input type="date" id="dob" name="dob"><br/>
 
                     <label for="signup-password">Password: </label>
                     <input type="password" id="signup-password" name="password" min="8" placeholder="************">

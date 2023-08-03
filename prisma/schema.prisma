@@ -25,6 +25,8 @@ model User {
     LastActed       DateTime    @default(now()) @updatedAt
     Joined          DateTime    @default(now())
     Bio             String      @db.VarChar(1024) @default("")
+    Dob             DateTime    
+    Verified        Boolean     @default(false)
     CommentsScore   Int         @default(0)
     PostsScore      Int         @default(0)
     IsDeleted       Boolean     @default(false)
