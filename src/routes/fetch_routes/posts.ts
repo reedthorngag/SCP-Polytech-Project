@@ -1,6 +1,6 @@
-import Route from "../types/route";
-import { PostCreateData } from "../types/post_data";
-import logger from "../util/logger";
+import Route from "../../types/route";
+import { PostCreateData } from "../../types/post_data";
+import logger from "../../util/logger";
 
 const fetch_post:Route = ['/fetch/post', 'GET', 'none', async (req:any,res:any) => {
     

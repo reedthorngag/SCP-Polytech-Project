@@ -1,4 +1,4 @@
-import Route from "../types/route";
+import Route from "../../types/route";
 
 
 const profile:Route = ['/profile','GET','required', async (req:any,res:any) => {

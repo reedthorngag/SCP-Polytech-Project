@@ -1,4 +1,4 @@
-import Route from "../types/route";
+import Route from "../../types/route";
 
 
 const routeList:Route[] = [
