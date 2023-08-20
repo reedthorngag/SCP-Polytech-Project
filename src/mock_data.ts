@@ -13,7 +13,6 @@ export default function () {
     (async () => {
 
         logger.info('Loading mock data...');
-
         logger.debug("Deleting old data...");
         // make sure to delete in the right order to prevent invalid forign keys
 

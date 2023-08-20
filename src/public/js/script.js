@@ -157,7 +157,19 @@ function submitSignup(form) {
     }
 
     if (failed) {
-        loginError('Please fill out all fields!');
+        signupError('Please fill out all fields!');
+        return;
+    }
+
+    // name validation
+    if (form[0].value.length > 48) {
+        form['1'].classList.add('input-error');
+        signupError('Name too long.');
+        return;
+    }
+    if (form[0].value.length < 5) {
+        form['1'].classList.add('input-error');
+        signupError('Name too short.');
         return;
     }
 
