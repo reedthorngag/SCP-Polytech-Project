@@ -1,10 +1,10 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import logger from './util/logger';
 import { PostType } from '@prisma/client';
 import postData from './mock_post_data';
 
 const start = new Date();
-const passwordHash = bcrypt.hashSync('5Tn67Znw4GE',5); // took ~183ms on a ryzen7 4800H @ 2.9GHz
+const passwordHash = bcrypt.hashSync('5Tn67Znw4GE',10); // took ~183ms on a ryzen7 4800H @ 2.9GHz
 const end = new Date();
 logger.info(`Time to hash: ${end.getMilliseconds()-start.getMilliseconds()}ms`); // yes, this is sometimes negative, I'm lazy
 
