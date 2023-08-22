@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Router } from 'express';
 import {glob} from 'glob'
 import path from 'path';
 import logger from './util/logger';
@@ -25,4 +25,4 @@ for (const [path,method,auth,handler] of routesList) {
 
 logger.info("exporting router");
 
-export default router
+export default router as Router;
