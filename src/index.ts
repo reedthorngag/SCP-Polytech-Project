@@ -3,6 +3,7 @@ import './tests/run_tests';
 import app from './server';
 import logger from './util/logger';
 import router from './router';
+logger.info("what?");
 import mock_data from './mock_data';
 
 mock_data();
