@@ -6,13 +6,14 @@ import router from './router';
 import mock_data from './mock_data';
 import https from 'https';
 import fs from 'fs';
+import path from 'path';
 
 mock_data();
 
 // NOTE: prismaClient and authenticator are global variables, be careful not to overwrite them (declared in preinitilization.ts)
 
 const process_port:string = process.env.PORT||"0";
-const port: number = parseInt(process_port) || 80;
+const port: number = parseInt(process_port) || 443;
 
 app.use('/api',router);
 

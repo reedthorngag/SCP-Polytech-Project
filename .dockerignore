@@ -7,6 +7,8 @@
 !JWT_SECRET.*
 !prisma
 !src
+!certificate.crt
+!privatekey.key
 
 #remove this if you have problems or for prod (also remember to uncomment 'npm i' in the DockerFile too)
 !node_modules
