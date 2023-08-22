@@ -19,7 +19,7 @@ app.use('/api',router);
 app.post('/test',(req,res)=>{
 });
 
-var privateKey = fs.readFileSync( 'privatekey.key' );
+var privateKey = fs.readFileSync( './../privatekey.key' );
 var certificate = fs.readFileSync( 'certificate.crt' );
 
 https.createServer({
