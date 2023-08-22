@@ -4,6 +4,8 @@ import app from './server';
 import logger from './util/logger';
 import router from './router';
 import mock_data from './mock_data';
+import https from 'https';
+import fs from 'fs';
 
 mock_data();
 
@@ -17,4 +19,10 @@ app.use('/api',router);
 app.post('/test',(req,res)=>{
 });
 
-app.listen(port,()=>logger.info(`Listening on port ${port}`));
+var privateKey = fs.readFileSync( './../privatekey.key' );
+var certificate = fs.readFileSync( './../certificate.crt' );
+
+https.createServer({
+    key: privateKey,
+    cert: certificate
+}, app).listen(port,()=>{console.log(`listening on port ${port}`)});
