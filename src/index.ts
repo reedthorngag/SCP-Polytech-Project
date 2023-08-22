@@ -19,8 +19,8 @@ app.use('/api',router);
 app.post('/test',(req,res)=>{
 });
 
-var privateKey = fs.readFileSync( './../privatekey.key' );
-var certificate = fs.readFileSync( './../certificate.crt' );
+var privateKey = fs.readFileSync( './../../privatekey.key' );
+var certificate = fs.readFileSync( './../../certificate.crt' );
 
 https.createServer({
     key: privateKey,
