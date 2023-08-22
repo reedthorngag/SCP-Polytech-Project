@@ -1,5 +1,5 @@
 import Route from '../../types/route';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const signup:Route = ['/signup','POST','optional', async (req:any,res:any) => {
     if (req.auth || !req.body.email || !req.body.password) {

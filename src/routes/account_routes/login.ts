@@ -1,5 +1,5 @@
 import Route from '../../types/route';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const login:Route = ['/login','POST','optional', async (req:any,res:any) => {
 
