@@ -72,7 +72,6 @@ function scrollHandler() {
     if (scrollHeight || loadFailed) {
         const timeoutTime = (new Date()).getTime()-lastUpdate;
         if (timeoutTime < 500 || (loadFailed && timeoutTime < 5000)) return;
-        console.log(timeoutTime)
     }
 
     lastUpdate = (new Date()).getTime();
@@ -161,15 +160,37 @@ function submitSignup(form) {
         return;
     }
 
+    console.log(form);
+
     // name validation
     if (form[0].value.length > 48) {
-        form['1'].classList.add('input-error');
-        signupError('Name too long.');
+        form[0].classList.add('input-error');
+        signupError('Name too long. Max length 48 characters');
         return;
     }
-    if (form[0].value.length < 5) {
-        form['1'].classList.add('input-error');
-        signupError('Name too short.');
+    if (form[0].value.length < 2) {
+        form[0].classList.add('input-error');
+        signupError('Name too short');
+        return;
+    }
+
+    // email validation
+    if (!form[1].value/*.contains('@')*/) {
+        form[1].classList.add('input-error');
+        signupError('Please enter a valid email address');
+        return;
+    }
+
+    // password validation
+    if (form[3].length < 11) {
+        form[1].classList.add('input-error');
+        signupError('Password must be 11 characters or more');
+        return;
+    }
+
+    if (form[3].value != form[4].value) {
+        form[4].classList.add('input-error');
+        signupError('Passwords dont\'t match');
         return;
     }
 

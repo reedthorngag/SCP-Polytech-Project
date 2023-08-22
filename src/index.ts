@@ -10,7 +10,7 @@ mock_data();
 // NOTE: prismaClient and authenticator are global variables, be careful not to overwrite them (declared in preinitilization.ts)
 
 const process_port:string = process.env.PORT||"0";
-const port: number = parseInt(process_port) || 3000;
+const port: number = parseInt(process_port) || 80;
 
 app.use('/api',router);
 
