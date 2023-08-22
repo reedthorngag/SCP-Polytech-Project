@@ -133,3 +133,5 @@ dist
 .env
 
 package-lock.json
+
+*.key
