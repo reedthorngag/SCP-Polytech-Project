@@ -2,7 +2,7 @@ import './preinitilization';
 import './tests/run_tests';
 import app from './server';
 import logger from './util/logger';
-import router from './router';
+import {router} from './router';
 logger.info("what?");
 import mock_data from './mock_data';
 

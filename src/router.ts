@@ -25,4 +25,4 @@ for (const [path,method,auth,handler] of routesList) {
 
 logger.info("exporting router");
 
-export default router as Router;
+export {router};
