@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY . .
 
+COPY ./../privatekey.key /app/privatekey.key
+COPY ./../certificate.crt /app/certificate.crt
+
 #RUN npm i
 
 FROM base as production
