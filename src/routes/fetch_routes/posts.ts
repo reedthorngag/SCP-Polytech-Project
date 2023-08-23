@@ -62,7 +62,7 @@ const fetch_next:Route = ['/fetch/next', 'GET', 'none', async (req:any,res:any) 
 
     try {
         const posts = await prismaClient.post.findMany({
-            take: !!fetch && fetch > 0 ? fetch : 1,
+            take: !!fetch && fetch > 0 ? fetch : 10,
             skip: !!skip && skip > 0 ? skip : 0,
             where: {
                 IsDeleted:false
