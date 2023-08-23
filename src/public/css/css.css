@@ -77,6 +77,10 @@ header profile button:hover {
     box-shadow: inset 0 0 1vw 0 #000070, 0 0 0.7vw 0 #000070;
 }
 
+header profile user {
+
+}
+
 .logo {
     display: flex;
     justify-content: center;
@@ -116,7 +120,7 @@ banner {
     width: 96vw;
     height: 30vmin;
     background-color: #2323a000;
-    border-radius: 1vmin;
+    border-radius: 0.6vmin;
 }
 
 banner img {
@@ -137,7 +141,7 @@ content {
     display: block;
     margin: 3vh 0 5vh 0;
     width: 90vw;
-    border-radius: 1vmin;
+    border-radius: 0.6vmin;
 }
 
 content-header {
@@ -162,7 +166,7 @@ sidebar {
     height: 50vh;
     background-color: #2020a0;
     margin: 5vh 2vw;
-    border-radius: 1vmin;
+    border-radius: 0.6vmin;
 }
 /*#endregion*/
 
@@ -175,7 +179,7 @@ header search {
     height: 5.5vmin;
     margin-top: 0.5vmin;
     width: fit-content;
-    border-radius: 100px;
+    border-radius: 3vmin;
     background-color: #00000020;
 }
 
@@ -354,7 +358,7 @@ post {
     height: fit-content;
     border-bottom: 0.2vmin solid #303030;
     background-color: #131358;
-    border-radius: 1vmin;
+    border-radius: 0.6vmin;
     margin-bottom: 2vh;
     cursor: default;
     padding: 1vmin 2vmin 2vmin 2vmin;
