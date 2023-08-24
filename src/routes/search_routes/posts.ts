@@ -16,12 +16,14 @@ const search_posts:Route = ['/search/posts','GET','none', async (req:any,res:any
             OR: [
                 {
                     Title: {
-                        contains: req.query.param
+                        contains: req.query.param,
+                        mode: 'insensitive'
                     }
                 },
                 {
                     Body: {
-                        contains: req.query.param
+                        contains: req.query.param,
+                        mode: 'insensitive'
                     }
                 }
             ]
