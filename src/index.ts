@@ -5,8 +5,8 @@ import logger from './util/logger';
 import router from './router';
 import mock_data from './mock_data';
 import https from 'https';
+import http from 'http';
 import fs from 'fs';
-import path from 'path';
 
 mock_data();
 
@@ -23,7 +23,9 @@ app.post('/test',(req,res)=>{
 var privateKey = fs.readFileSync( 'privatekey.key' );
 var certificate = fs.readFileSync( 'certificate.crt' );
 
+
+http.createServer(app).listen(80);
 https.createServer({
     key: privateKey,
     cert: certificate
-}, app).listen(port,()=>{console.log(`listening on port ${port}`)});
+}, app).listen(port,()=>{logger.info(`listening on port ${port}`)});

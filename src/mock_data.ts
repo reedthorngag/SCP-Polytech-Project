@@ -28,7 +28,7 @@ export default function () {
         const UnknownUser = (await prismaClient.user.create({
             data: {
                 Name: 'UnknownUser',
-                DisplayName: 'Unknown User',
+                DisplayName: 'Anonymous User',
                 Bio: '',
                 Dob: new Date(),
                 IsAdmin: false

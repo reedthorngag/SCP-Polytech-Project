@@ -78,7 +78,25 @@ header profile button:hover {
 }
 
 header profile user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    font-size: 2vmin;
+    border-radius: 3vmin;
+    padding: 0 2vmin;
+    height: 80%;
+    cursor: pointer;
+}
 
+header profile user:hover {
+    box-shadow: inset 0 0 3vmin 3vmin #00000010, 0 0 1vmin 0 #000050;
+}
+
+header profile user dropdown-arrow {
+    display: inline;
+    font-size: inherit;
+    margin-left: 1vmin;
 }
 
 .logo {
