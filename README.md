@@ -1,2 +1,2 @@
-# Project-Snowball
-An awesome new reddit replacement
+# SCP Polytech Project
+
