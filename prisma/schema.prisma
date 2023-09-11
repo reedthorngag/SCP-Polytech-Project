@@ -98,6 +98,7 @@ model Post {
     Type            PostType    @default(TEXT)
     Title           String      @db.VarChar(128)
     Url             String?     @db.VarChar(1024)
+    Description     String?     @db.Text
     Body            String?     @db.Text
     Rating          Int         @default(0)
     AuthorID        String      @db.Uuid

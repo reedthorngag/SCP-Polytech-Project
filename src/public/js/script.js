@@ -330,13 +330,22 @@ function loadPost(data) {
 
     if (data.Type !== 'TEXT' && data.Type !== 'IMAGE') return; // only text and images are supported so far
 
+    const readButton = document.createElement('button');
+    readButton.innerText = "Read description out loud.";
+    const description = data.Description;
+    readButton.onclick = (e) => {
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance(description));
+        e.stopPropagation();
+    }
+
     // first build the info header (saying the community and who posted it)
     const communityElem = document.createElement('community');
     communityElem.innerText = data.Community.Name;
     const authorElem = document.createElement('author');
     authorElem.innerText = data.Author.DisplayName;
     const infoElem = document.createElement('post-header');
-    infoElem.append('Community: ',communityElem,' Author: ',authorElem);
+    infoElem.append('Community: ',communityElem,' Author: ',authorElem,readButton);
 
     // then create the post data, title + body
     const titleElem = document.createElement('title');
@@ -348,6 +357,7 @@ function loadPost(data) {
         imgElem.alt = 'post image';
     }
     const bodyPreviewElem = document.createElement('body');
+    data.Body = data.Body.replace("${description}",data.Description);
     bodyPreviewElem.innerText = data.Body.length > 256 ? data.Body.slice(0,256)+'...' : data.Body;
 
     // then build the post from those
@@ -422,13 +432,22 @@ function displayPost(post,postID,save) {
 
         if (data.Type !== 'TEXT' && data.Type !== 'IMAGE') return; // only text and images are supported so far
 
+        const readButton = document.createElement('button');
+        readButton.innerText = "Read description out loud.";
+        const description = data.Description;
+        readButton.onclick = (e) => {
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(new SpeechSynthesisUtterance(description));
+            e.stopPropagation();
+        }
+
         // first build the header (saying the community and who posted it and a back button)
         const communityElem = document.createElement('community');
         communityElem.innerText = data.Community.Name;
         const authorElem = document.createElement('author');
         authorElem.innerText = data.Author.DisplayName;
         const infoElem = document.createElement('post-header');
-        infoElem.append('Community: ',communityElem,' Author: ',authorElem);
+        infoElem.append('Community: ',communityElem,' Author: ',authorElem,readButton);
 
         // then create the post data, title + body
         const titleElem = document.createElement('title');

@@ -402,6 +402,11 @@ post post-header community, post post-header author {
     padding-right: 1vmin;
 }
 
+post post-header button {
+    float: right;
+    cursor: pointer;
+}
+
 post title {
     display: block;
     width: 100%;
@@ -421,8 +426,9 @@ post body {
     display: block;
     width: 100%;
     height: fit-content;
-    font-size: 2vmin;
+    font-size: 2.2vmin;
     margin-left: 1vmin;
+    background-color: inherit;
 }
 
 /*#endregion*/

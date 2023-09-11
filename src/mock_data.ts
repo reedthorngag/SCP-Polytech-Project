@@ -80,6 +80,7 @@ export default function () {
             await prismaClient.post.create({
                 data: {
                     Title: post.title,
+                    Description: post.description,
                     Body: post.body,
                     CommunityID: (await prismaClient.community.findFirst())!.CommunityID,
                     AuthorID: (await prismaClient.user.findFirst())!.UserID,
