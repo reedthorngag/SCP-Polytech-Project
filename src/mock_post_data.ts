@@ -18,7 +18,6 @@ const scp002 = {
         No personnel below Level 3 are permitted within SCP-002. This requirement may be waived via written authorization from two (2) off-site Level 4 administrators. Command staff issued such a waiver must be escorted by at least five (5) Level 3 Security personnel for the duration of their contact and must temporarily surrender their rank and security clearance. Following contact, command staff will be escorted at least 5 km from SCP-002 to undergo a seventy-two (72)-hour quarantine and psychological evaluation. If deemed fit for return to duty by psych staff, rank and security clearance may be restored when quarantine expires.
         
         Description:
-
         \${description}
         
         Reference:
@@ -90,7 +89,6 @@ const scp003 = {
     
     
     Description:
-    
     \${description}
     
     Addendum 003-01:
@@ -138,7 +136,6 @@ const scp004 = {
     Level 1 clearance is required for basic access to SCP-004-1; Level 4 clearance is required for use of SCP-004-2 to -13.
     
     Description:
-    
     \${description}
     
     Chronological History
@@ -213,7 +210,6 @@ const scp005 = {
     SCP-005 poses no immediate risk in any direct sense. Even so, its unique functions require special measures be taken to restrict access and manipulation of the object. Approval of at least one (1) Level 4 personnel is required for the removal of the object from its containment area.
 
     Description:
-    
     \${description}
     
     Additional Notes:
@@ -249,7 +245,6 @@ const scp006 = {
 
     
     Description:
-    
     \${description}
 `,
 }

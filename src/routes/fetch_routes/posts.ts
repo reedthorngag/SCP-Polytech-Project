@@ -106,7 +106,6 @@ const fetch_next:Route = ['/fetch/next', 'GET', 'none', async (req:any,res:any) 
             logger.error(error);
         }
     }
-
 }];
 
 const create_post:Route = ['/create/post', 'POST', 'required', async (req:any,res:any) => {

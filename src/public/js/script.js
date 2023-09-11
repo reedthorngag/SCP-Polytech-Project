@@ -459,7 +459,7 @@ function displayPost(post,postID,save) {
             imgElem.alt = 'post image';
         }
         const bodyPreviewElem = document.createElement('body');
-        bodyPreviewElem.innerText = data.Body;
+        bodyPreviewElem.innerText = data.Body.replace("${description}",data.Description);
 
         const backbutton = document.createElement('back-button');
 
