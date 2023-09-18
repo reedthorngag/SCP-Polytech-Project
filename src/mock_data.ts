@@ -81,6 +81,7 @@ export default function () {
                 data: {
                     Title: post.title,
                     Description: post.description,
+                    Class: post.class,
                     Body: post.body,
                     CommunityID: (await prismaClient.community.findFirst())!.CommunityID,
                     AuthorID: (await prismaClient.user.findFirst())!.UserID,

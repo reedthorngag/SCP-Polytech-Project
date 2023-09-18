@@ -1,6 +1,7 @@
 
 const scp002 = {
     title: "SCP-002",
+    class: "Euclid",
     description: `
         SCP-002 resembles a tumorous, fleshy growth with a volume of roughly 60 m³ (or 2000 ft³). An iron valve hatch on one side leads to its interior, which appears to be a standard low-rent apartment of modest size. One wall of the room possesses a single window, though no such opening is visible from the exterior. The room contains furniture which, upon close examination, appears to be sculpted bone, woven hair, and various other biological substances produced by the human body. All matter tested thus far show independent or fragmented DNA sequences for each object in the room.
 
@@ -45,6 +46,7 @@ const scp002 = {
 
 const scp003 = {
     title: "SCP-003",
+    class: "Euclid",
     description: `
         SCP-003 consists of two related components of separate origin, referred to as SCP-003-1 and SCP-003-2.
         
@@ -123,6 +125,7 @@ const scp003 = {
 
 const scp004 = {
     title: "SCP-004",
+    class: "Euclid",
     description: `
         SCP-004 consists of an old wooden barn door (SCP-004-1) and a set of twelve rusted steel keys (SCP-004-2 through SCP-004-13). The door itself is the entrance to an abandoned factory in [DATA EXPUNGED].
     `,
@@ -199,13 +202,14 @@ const scp004 = {
 
 const scp005 = {
     title: "SCP-005",
+    class: "safe",
     description: `
         In appearance, SCP-005 resembles an ornate key, displaying the characteristics of a typical mass produced key used in the 1920s. The key was discovered when a civilian used it to infiltrate a high security facility. SCP-005 seems to have the unique ability to open any and all forms of lock (See Appendix A), be they mechanical or digital, with relative ease. The origin of this ability has yet to be determined.
     `,
     body: `
     Object Class: Safe
     
-    Special Containment Procedures:
+    Special Containment Procedures:y
 
     SCP-005 poses no immediate risk in any direct sense. Even so, its unique functions require special measures be taken to restrict access and manipulation of the object. Approval of at least one (1) Level 4 personnel is required for the removal of the object from its containment area.
 
@@ -225,6 +229,7 @@ image: 'SCP-005.jpg'
 
 const scp006 = {
     title: "SCP-006",
+    class: "Safe",
     description: `
         SCP-006 is a very small spring located 60 km west of Astrakhan. Foundation Command was aware of its existence since the 19th century, but were unable to secure it until 1991 due to political reasons. On the spot of the spring, a chemical factory has been constructed as a disguise, with the majority of laborers under Foundation and/or Russian control. The liquid emitted from the spring has been chemically identified as simple mineral water in 1902, but has the unusual property of "health".
 
@@ -255,5 +260,5 @@ export default [
     scp004,
     scp005,
     scp006
-] as {title:string,description:string,body:string,image?:string}[]
+] as {title:string,class:string,description:string,body:string,image?:string}[]
 

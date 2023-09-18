@@ -83,6 +83,7 @@ const fetch_next:Route = ['/fetch/next', 'GET', 'none', async (req:any,res:any) 
                 Type:true,
                 Url:true,
                 Description:true,
+                Class:true,
                 Body:true,
                 Rating:true,
                 Author: {
